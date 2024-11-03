@@ -4,6 +4,7 @@
     import com.seokho.crash.model.user.Role;
     import jakarta.persistence.*;
     import org.springframework.security.core.GrantedAuthority;
+    import org.springframework.security.core.authority.SimpleGrantedAuthority;
     import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -107,7 +108,20 @@
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return null;
+            if (this.role.equals(Role.ADMIN)){
+                return List.of(
+                        new SimpleGrantedAuthority("ROLE_" + Role.ADMIN.name()),
+                        new SimpleGrantedAuthority(Role.ADMIN.name()),
+                        new SimpleGrantedAuthority("ROLE_" + Role.USER.name()),
+                        new SimpleGrantedAuthority(Role.USER.name())
+                );
+
+            }else {
+                return List.of(
+                        new SimpleGrantedAuthority("ROLE_" + Role.USER.name()),
+                        new SimpleGrantedAuthority(Role.USER.name()));
+            }
+
         }
 
         @Override

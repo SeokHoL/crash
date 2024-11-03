@@ -1,5 +1,6 @@
 package com.seokho.crash.config;
 
+import com.seokho.crash.model.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +42,11 @@ public class WebConfiguration {
                 .authorizeHttpRequests((requests)-> requests
                         .requestMatchers(HttpMethod.POST, "/api/*/users", "/api/*/users/authenticate")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/*/session-speakers", "/api/*/session-speakers/**")
+                        .permitAll()
+
+                        .requestMatchers("/api/*/session-speakers", "/api/*/session-speakers/**")
+                        .hasAnyAuthority(Role.ADMIN.name())
                         .anyRequest().authenticated()) //위의 내용을 제외한 나머지 모든 request는 인증을 확인할거야.
                 .sessionManagement(
                         (session)-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
