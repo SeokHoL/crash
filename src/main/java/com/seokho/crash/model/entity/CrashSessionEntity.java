@@ -1,12 +1,11 @@
     package com.seokho.crash.model.entity;
 
 
+
     import com.seokho.crash.model.crashsession.CrashSessionCategory;
     import jakarta.persistence.*;
-
     import java.time.ZonedDateTime;
     import java.util.Objects;
-    import java.util.Random;
 
     @Entity
     @Table(name = "crashsession")
@@ -19,10 +18,8 @@
         @Column(nullable = false)
         private String title;
 
-
         @Column(columnDefinition = "TEXT", nullable = false)
         private String body;
-
 
         @Column(nullable = false)
         @Enumerated(value = EnumType.STRING)
@@ -34,7 +31,6 @@
         @ManyToOne
         @JoinColumn(name = "speakerid")
         private SessionSpeakerEntity speaker;
-
 
         public Long getSessionId() {
             return sessionId;
@@ -87,14 +83,19 @@
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            CrashSessionEntity that = (CrashSessionEntity) o;
-            return Objects.equals(sessionId, that.sessionId) && Objects.equals(title, that.title) && Objects.equals(body, that.body) && category == that.category && Objects.equals(dateTime, that.dateTime) && Objects.equals(speaker, that.speaker);
+            if (!(o instanceof CrashSessionEntity that)) return false;
+            return Objects.equals(getSessionId(), that.getSessionId())
+                    && Objects.equals(getTitle(), that.getTitle())
+                    && Objects.equals(getBody(), that.getBody())
+                    && getCategory() == that.getCategory()
+                    && Objects.equals(getDateTime(), that.getDateTime())
+                    && Objects.equals(getSpeaker(), that.getSpeaker());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(sessionId, title, body, category, dateTime, speaker);
+            return Objects.hash(
+                    getSessionId(), getTitle(), getBody(), getCategory(), getDateTime(), getSpeaker());
         }
 
         public static CrashSessionEntity of(
@@ -102,13 +103,13 @@
                 String body,
                 CrashSessionCategory crashSessionCategory,
                 ZonedDateTime dateTime,
-                SessionSpeakerEntity sessionSpeakerEntity){
+                SessionSpeakerEntity sessionSpeakerEntity) {
             var crashSessionEntity = new CrashSessionEntity();
             crashSessionEntity.setTitle(title);
             crashSessionEntity.setBody(body);
             crashSessionEntity.setCategory(crashSessionCategory);
             crashSessionEntity.setDateTime(dateTime);
             crashSessionEntity.setSpeaker(sessionSpeakerEntity);
-            return  crashSessionEntity;
+            return crashSessionEntity;
         }
     }

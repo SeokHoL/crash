@@ -86,14 +86,13 @@
             return Objects.hash(speakerId, company, name, description, profile);
         }
 
-        public static SessionSpeakerEntity of(String company,String name, String description) {
-            var sessionSpeaker = new SessionSpeakerEntity();
-            sessionSpeaker.setCompany(company);
-            sessionSpeaker.setName(name);
-            sessionSpeaker.setDescription(description);
-            sessionSpeaker.setProfile(
-                    "https://dev-jayce.github.io/public/profile/" + (new Random().nextInt(100 + 1) + ".png"));
-
-            return sessionSpeaker;
+        public static SessionSpeakerEntity of(String company, String name, String description) {
+            var sessionSpeakerEntity = new SessionSpeakerEntity();
+            sessionSpeakerEntity.setCompany(company);
+            sessionSpeakerEntity.setName(name);
+            sessionSpeakerEntity.setDescription(description);
+            sessionSpeakerEntity.setProfile(
+                    "https://dev-jayce.github.io/public/profile/" + (new Random().nextInt(100) + 1) + ".png");
+            return sessionSpeakerEntity;
         }
     }

@@ -42,12 +42,21 @@ public class WebConfiguration {
                 .authorizeHttpRequests((requests)-> requests
                         .requestMatchers(HttpMethod.POST, "/api/*/users", "/api/*/users/authenticate")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/*/session-speakers", "/api/*/session-speakers/**")
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/*/session-speakers",
+                                "/api/*/session-speakers/**",
+                                "/api/*/crash-sessions",
+                                "/api/*/crash-sessions/**")
                         .permitAll()
 
-                        .requestMatchers("/api/*/session-speakers", "/api/*/session-speakers/**")
+                        .requestMatchers(
+                                "/api/*/session-speakers",
+                                "/api/*/session-speakers/**",
+                                "/api/*/crash-sessions",
+                                "/api/*/crash-sessions/**")
                         .hasAnyAuthority(Role.ADMIN.name())
-                        .anyRequest().authenticated()) //위의 내용을 제외한 나머지 모든 request는 인증을 확인할거야.
+
+                        .anyRequest().authenticated()) //위의 내용을 제외한 나머지 모든 request는 jwt인증을 확인할거야.
                 .sessionManagement(
                         (session)-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
