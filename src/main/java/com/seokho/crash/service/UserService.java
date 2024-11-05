@@ -3,7 +3,8 @@ package com.seokho.crash.service;
 import com.seokho.crash.exception.user.UserNotFoundException;
 import com.seokho.crash.exception.user.user.UserAlreadyExistsException;
 import com.seokho.crash.model.entity.UserEntity;
-import com.seokho.crash.model.repository.UserEntityRepository;
+import com.seokho.crash.repository.UserEntityCacheRepository;
+import com.seokho.crash.repository.UserEntityRepository;
 import com.seokho.crash.model.user.User;
 import com.seokho.crash.model.user.UserAuthenticationResponse;
 import com.seokho.crash.model.user.UserLoginRequestBody;
@@ -25,6 +26,8 @@ public class UserService implements UserDetailsService {
     @Autowired private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired private  JwtService jwtService;
+
+    @Autowired private UserEntityCacheRepository userEntityCacheRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -63,7 +66,19 @@ public class UserService implements UserDetailsService {
     }
 
     private UserEntity getUserEntityByUsername(String username) {
-        return userEntityRepository.findByUsername(username)
-                .orElseThrow(()-> new UserNotFoundException(username)) ;
+
+        return userEntityCacheRepository.getUserEntityCache(username)
+                .orElseGet(() -> {
+                    var userEntity =
+                            userEntityRepository.findByUsername(username)
+                                    .orElseThrow(() -> new UserNotFoundException(username));
+
+                    userEntityCacheRepository.setUserEntityCache(userEntity);
+                    return userEntity;
+
+                });
+
+
     }
+
 }

@@ -1,4 +1,4 @@
-package com.seokho.crash.model.repository;
+package com.seokho.crash.repository;
 
 import com.seokho.crash.model.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

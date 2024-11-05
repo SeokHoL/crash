@@ -1,6 +1,7 @@
     package com.seokho.crash.model.entity;
 
 
+    import com.fasterxml.jackson.annotation.JsonIgnore;
     import com.seokho.crash.model.user.Role;
     import jakarta.persistence.*;
     import org.springframework.security.core.GrantedAuthority;
@@ -107,6 +108,7 @@
         }
 
         @Override
+        @JsonIgnore
         public Collection<? extends GrantedAuthority> getAuthorities() {
             if (this.role.equals(Role.ADMIN)){
                 return List.of(
@@ -135,21 +137,25 @@
         }
 
         @Override
+        @JsonIgnore
         public boolean isAccountNonExpired() {
             return true;
         }
 
         @Override
+        @JsonIgnore
         public boolean isAccountNonLocked() {
             return true;
         }
 
         @Override
+        @JsonIgnore
         public boolean isCredentialsNonExpired() {
             return true;
         }
 
         @Override
+        @JsonIgnore
         public boolean isEnabled() {
             return true;
         }

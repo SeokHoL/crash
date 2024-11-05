@@ -7,7 +7,7 @@ import com.seokho.crash.model.entity.RegistrationEntity;
 import com.seokho.crash.model.entity.UserEntity;
 import com.seokho.crash.model.registration.Registration;
 import com.seokho.crash.model.registration.RegistrationPostRequestBody;
-import com.seokho.crash.model.repository.RegistrationEntityRepository;
+import com.seokho.crash.repository.RegistrationEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,8 @@ public class RegistrationService {
     @Autowired private RegistrationEntityRepository registrationEntityRepository;
 
     @Autowired private  CrashSessionService crashSessionService;
+
+    @Autowired private SlackService slackService;
 
     public List<Registration> getRegistrationsByCurrentUser(UserEntity currentUser) {
         var registrationEntities = registrationEntityRepository.findByUser(currentUser);
@@ -53,10 +55,14 @@ public class RegistrationService {
                         }
                 );
 
+
+
         var registrationEntity = RegistrationEntity.of(currentUser, crashSessionEntity);
-        return Registration.from(
-                registrationEntityRepository.save(registrationEntity)
-        );
+        var registration =  Registration.from(registrationEntityRepository.save(registrationEntity));
+
+        slackService.sendSlackNotification(registration);
+
+        return registration;
 
     }
 

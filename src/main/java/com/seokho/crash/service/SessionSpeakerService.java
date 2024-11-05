@@ -3,7 +3,7 @@ package com.seokho.crash.service;
 
 import com.seokho.crash.exception.sessionspeaker.SessionSpeakerNotFoundException;
 import com.seokho.crash.model.entity.SessionSpeakerEntity;
-import com.seokho.crash.model.repository.SessionSpeakerEntityRepository;
+import com.seokho.crash.repository.SessionSpeakerEntityRepository;
 import com.seokho.crash.model.sessionspeaker.SessionSpeaker;
 import com.seokho.crash.model.sessionspeaker.SessionSpeakerPatchRequestBody;
 import com.seokho.crash.model.sessionspeaker.SessionSpeakerPostRequestBody;

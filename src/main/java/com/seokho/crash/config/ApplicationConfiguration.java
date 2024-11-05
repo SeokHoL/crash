@@ -10,6 +10,7 @@ import com.seokho.crash.model.sessionspeaker.SessionSpeakerPostRequestBody;
 import com.seokho.crash.model.user.UserSignUpRequestBody;
 import com.seokho.crash.service.CrashSessionService;
 import com.seokho.crash.service.SessionSpeakerService;
+import com.seokho.crash.service.SlackService;
 import com.seokho.crash.service.UserService;
 import net.datafaker.Faker;
 import org.slf4j.Logger;
@@ -42,26 +43,30 @@ public class ApplicationConfiguration {
 
     @Autowired private CrashSessionService crashSessionService;
 
+    @Autowired private SlackService slackService;
+
     @Bean
     public ApplicationRunner applicationRunner(){
         return new ApplicationRunner() {
             @Override
             public void run(ApplicationArguments args) throws Exception {
 
-//                createTestUsers();
-//                createTestSessionSpeakers(10);
-                
-                //비트코인 USD 가격조회
-                var bitcoinUsdPrcie = getBitcoinUsdPrice();
 
-                //USD TO krw 환율조회
-                var usdTokrwExchangeRate = getUsdToKrwExchangeRate();
 
-                //비트코인 KRW 가격 계산
-                var koreanPremium = 1.1;
-                var bitcoinKrwPrice =bitcoinUsdPrcie * usdTokrwExchangeRate * koreanPremium;
-
-                logger.info(String.format("BTC KRW: %.2f", bitcoinKrwPrice));
+                createTestUsers();
+                createTestSessionSpeakers(10);
+//
+//                //비트코인 USD 가격조회
+//                var bitcoinUsdPrcie = getBitcoinUsdPrice();
+//
+//                //USD TO krw 환율조회
+//                var usdTokrwExchangeRate = getUsdToKrwExchangeRate();
+//
+//                //비트코인 KRW 가격 계산
+//                var koreanPremium = 1.1;
+//                var bitcoinKrwPrice =bitcoinUsdPrcie * usdTokrwExchangeRate * koreanPremium;
+//
+//                logger.info(String.format("BTC KRW: %.2f", bitcoinKrwPrice));
             }
         };
     }
