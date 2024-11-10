@@ -14,7 +14,7 @@
 # 📝 포트폴리오 개요
 
 
-  <img src="https://github.com/user-attachments/assets/62e62850-dc3c-4637-aae2-ac37c65a0deab" width="700" height="400" alt="포트폴리오 메인 이미지" />
+  <img src="https://github.com/user-attachments/assets/25cb7664-19b2-41b9-aa76-0e3f4dcfba25" width="700" height="400" alt="포트폴리오 메인 이미지" />
 
 
 > ### 프로젝트: 개인 포트폴리오 사이트
